@@ -1,0 +1,8 @@
+sistemas con una capa densa (SENCILLO)
+
+
+
+230/230 [==============================] - 0s 2ms/step
+Mean Squared Error: 34.66249797400566
+R^2 Score: 0.9977131650780892
+Mean Absolute Error: 3.590120565191822
