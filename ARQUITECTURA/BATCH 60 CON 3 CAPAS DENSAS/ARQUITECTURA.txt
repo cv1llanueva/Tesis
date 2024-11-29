@@ -1,0 +1,42 @@
+from tensorflow.keras.layers import Dropout, BatchNormalization
+from tensorflow.keras import layers, models
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Definir el modelo
+model = models.Sequential()
+
+# Capas convolucionales
+model.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=(13, 13, 4)))
+model.add(layers.MaxPooling2D((2, 2), padding='same'))
+
+model.add(layers.Conv2D(64, (3, 3), activation='relu'))
+model.add(layers.MaxPooling2D((2, 2), padding='same'))
+
+model.add(layers.Conv2D(128, (2, 2), activation='relu'))
+model.add(layers.MaxPooling2D((2, 2), padding='same'))
+
+# Aplanado
+model.add(layers.Flatten())
+
+# Capas densas
+model.add(layers.Dense(128, activation='relu'))
+model.add(layers.Dense(56, activation='relu'))
+model.add(layers.Dense(13, activation='relu'))
+
+# Capa de salida
+model.add(layers.Dense(1))
+
+# Compilación
+model.compile(optimizer='adam', loss='mse', metrics=['mae'])
+
+# Callbacks
+early_stop = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
+lr_scheduler = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5, verbose=1)
+
+# Resumen del modelo
+model.summary()
